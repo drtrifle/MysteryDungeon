@@ -90,18 +90,14 @@ MonoBehaviour:
   - {fileID: 1546928997759370, guid: b3e85f4fd2f607643945b52eaea62d14, type: 2}
   - {fileID: 1949126639713692, guid: ee061fef56ac9e04284de1ba5172cc1c, type: 2}
   - {fileID: 1151729120175516, guid: 58b4e995b49a4a04c8687d3a1a7b0478, type: 2}
-  wallTiles:
-  - {fileID: 1528498756778170, guid: cc02436b7bd4e09409d748ea9854f047, type: 2}
-  - {fileID: 1723887408335432, guid: da3ad737e66162743aa8de4d30d2af48, type: 2}
-  - {fileID: 1357753860315690, guid: 9c26056d64568184db71102a5e6f212f, type: 2}
-  - {fileID: 1973560585167572, guid: 08db432316a174c47995c7855d087f2e, type: 2}
-  - {fileID: 1233172959647956, guid: 17792b364f9127649aa60e76571820e7, type: 2}
-  - {fileID: 1637374829562910, guid: eb3956ccdf3df984ebb51a244f8a7111, type: 2}
-  - {fileID: 1844620981514914, guid: 078bcd883f7ad6f4caa72ce02a4cbe0e, type: 2}
-  - {fileID: 1761075209572180, guid: 42460db7c4003254187b9247b2c78c4b, type: 2}
+  wallTiles: []
   outerWallTiles:
   - {fileID: 1434317965014178, guid: e05d23862e0d5384999f54bc559e744f, type: 2}
   - {fileID: 1776577706773586, guid: d0a4050cc979e19438daf2c48c9adb4b, type: 2}
   - {fileID: 1430452563507030, guid: 6414c028d79a6144393a83c0f6ee482e, type: 2}
-  player: {fileID: 1136039024858826, guid: 74bfe1d9bb7823a4da3350737178f561, type: 2}
+  player: {fileID: 1248007432738178, guid: 335c99387611781429607add925c34fa, type: 2}
   exit: {fileID: 1152885985343146, guid: dcfaab4c6b18ae349be86b8a450c740a, type: 2}
+  wallMap: {fileID: 0}
+  floorMap: {fileID: 0}
+  wallTile: {fileID: 11400000, guid: feef54bff65a0364a83c6c9976606b57, type: 2}
+  floorTile: {fileID: 11400000, guid: bd9c549898160814aa859f6825c5e2b0, type: 2}

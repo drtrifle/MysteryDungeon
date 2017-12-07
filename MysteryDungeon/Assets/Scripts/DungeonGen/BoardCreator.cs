@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Tilemaps;
 
 public class BoardCreator : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class BoardCreator : MonoBehaviour
     private Corridor[] corridors;                             // All the corridors that connect the rooms.
     private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
 
+    public Tilemap wallMap;
+    public Tilemap floorMap;
+    public RuleTile wallTile;
+    public Tile floorTile;
 
     private void Start()
     {
@@ -42,7 +47,8 @@ public class BoardCreator : MonoBehaviour
         SetTilesValuesForRooms();
         SetTilesValuesForCorridors();
 
-        InstantiateTiles();
+        //InstantiateTiles();
+        InstantiateTilemapTiles();
         InstantiateOuterWalls();
         InstantiateUnits();
     }
@@ -187,6 +193,19 @@ public class BoardCreator : MonoBehaviour
         }
     }
 
+    void InstantiateTilemapTiles() {
+
+        // Go through all the tiles in the jagged array...
+        for (int i = 0; i < tiles.Length; i++) {
+            for (int j = 0; j < tiles[i].Length; j++) {
+                if (tiles[i][j] == TileType.Wall) {
+                    wallMap.SetTile(new Vector3Int(i, j, 0), wallTile);
+                }
+                floorMap.SetTile(new Vector3Int(i, j, 0), floorTile);
+            }
+        }
+    }
+
     void InstantiateUnits()
     {
         //Instantiate Player
@@ -218,47 +237,49 @@ public class BoardCreator : MonoBehaviour
     void InstantiateOuterWalls()
     {
         // The outer walls are one unit left, right, up and down from the board.
-        float leftEdgeX = -1f;
-        float rightEdgeX = columns + 0f;
-        float bottomEdgeY = -1f;
-        float topEdgeY = rows + 0f;
+        int leftEdgeX = -1;
+        int rightEdgeX = columns + 0;
+        int bottomEdgeY = -1;
+        int topEdgeY = rows + 0;
 
         // Instantiate both vertical walls (one on each side).
         InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeY, topEdgeY);
         InstantiateVerticalOuterWall(rightEdgeX, bottomEdgeY, topEdgeY);
 
         // Instantiate both horizontal walls, these are one in left and right from the outer walls.
-        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, bottomEdgeY);
-        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, topEdgeY);
+        InstantiateHorizontalOuterWall(leftEdgeX + 1, rightEdgeX - 1, bottomEdgeY);
+        InstantiateHorizontalOuterWall(leftEdgeX + 1, rightEdgeX - 1, topEdgeY);
     }
 
 
-    void InstantiateVerticalOuterWall(float xCoord, float startingY, float endingY)
+    void InstantiateVerticalOuterWall(int xCoord, int startingY, int endingY)
     {
         // Start the loop at the starting value for Y.
-        float currentY = startingY;
+        int currentY = startingY;
 
         // While the value for Y is less than the end value...
         while (currentY <= endingY)
         {
             // ... instantiate an outer wall tile at the x coordinate and the current y coordinate.
-            InstantiateFromArray(outerWallTiles, xCoord, currentY);
+            //InstantiateFromArray(outerWallTiles, xCoord, currentY);
+            wallMap.SetTile(new Vector3Int(xCoord, currentY, 0), wallTile);
 
             currentY++;
         }
     }
 
 
-    void InstantiateHorizontalOuterWall(float startingX, float endingX, float yCoord)
+    void InstantiateHorizontalOuterWall(int startingX, int endingX, int yCoord)
     {
         // Start the loop at the starting value for X.
-        float currentX = startingX;
+        int currentX = startingX;
 
         // While the value for X is less than the end value...
         while (currentX <= endingX)
         {
             // ... instantiate an outer wall tile at the y coordinate and the current x coordinate.
-            InstantiateFromArray(outerWallTiles, currentX, yCoord);
+            //InstantiateFromArray(outerWallTiles, currentX, yCoord);
+            wallMap.SetTile(new Vector3Int(currentX, yCoord, 0), wallTile);
 
             currentX++;
         }
