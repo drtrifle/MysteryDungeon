@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: 96f001dd74e13ae4e92b916a9055abfa
-timeCreated: 1512616352
+timeCreated: 1512619912
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Game Boy Advance - Pokemon Mystery Dungeon Red Rescue Team - Mt Steel
       01F - 05F_0
+    21300002: Game Boy Advance - Pokemon Mystery Dungeon Red Rescue Team - Mt Steel
+      01F - 05F_1
+    21300004: Game Boy Advance - Pokemon Mystery Dungeon Red Rescue Team - Mt Steel
+      01F - 05F_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -112,6 +116,36 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 334
+        y: 558
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Game Boy Advance - Pokemon Mystery Dungeon Red Rescue Team - Mt Steel
+        01F - 05F_1
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 558
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Game Boy Advance - Pokemon Mystery Dungeon Red Rescue Team - Mt Steel
+        01F - 05F_2
+      rect:
+        serializedVersion: 2
+        x: 409
         y: 558
         width: 24
         height: 24
