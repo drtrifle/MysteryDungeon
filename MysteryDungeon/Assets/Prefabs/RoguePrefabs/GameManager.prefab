@@ -96,7 +96,7 @@ MonoBehaviour:
   - {fileID: 1776577706773586, guid: d0a4050cc979e19438daf2c48c9adb4b, type: 2}
   - {fileID: 1430452563507030, guid: 6414c028d79a6144393a83c0f6ee482e, type: 2}
   player: {fileID: 1248007432738178, guid: 335c99387611781429607add925c34fa, type: 2}
-  exit: {fileID: 1152885985343146, guid: dcfaab4c6b18ae349be86b8a450c740a, type: 2}
+  exit: {fileID: 1152885985343146, guid: 7303d14539ee60244aab10efd3f34e17, type: 2}
   wallMap: {fileID: 0}
   floorMap: {fileID: 0}
   wallTile: {fileID: 11400000, guid: feef54bff65a0364a83c6c9976606b57, type: 2}
