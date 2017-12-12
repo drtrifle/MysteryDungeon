@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour {
     private bool enemiesMoving;                             //Boolean to check if enemies are moving.
     private bool doingSetup = true;                         //Boolean to check if we're setting up board, prevent Player from moving during setup.
 
-
+    public int numCols;
+    public int numRows;
 
     //Awake is always called before any Start functions
     void Awake() {

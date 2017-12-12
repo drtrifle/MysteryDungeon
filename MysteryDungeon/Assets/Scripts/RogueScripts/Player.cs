@@ -193,7 +193,7 @@ public class Player : MovingObject {
     //It takes a parameter loss which specifies how many points to lose.
     public void LoseFood(int loss) {
         //Set the trigger for the player animator to transition to the playerHit animation.
-        animator.SetTrigger("playerHit");
+        //animator.SetTrigger("playerHit");
 
         //Subtract lost food points from the players total.
         food -= loss;

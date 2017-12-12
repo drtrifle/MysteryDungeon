@@ -38,6 +38,9 @@ public class BoardCreator : MonoBehaviour
 
     private void Start()
     {
+        GameManager.instance.numCols = columns;
+        GameManager.instance.numRows = rows;
+
         // Create the board holder.
         boardHolder = new GameObject("BoardHolder");
 
