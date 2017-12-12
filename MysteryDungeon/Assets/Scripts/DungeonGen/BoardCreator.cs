@@ -22,8 +22,9 @@ public class BoardCreator : MonoBehaviour
     public GameObject[] wallTiles;                            // An array of wall tile prefabs.
     public GameObject[] outerWallTiles;                       // An array of outer wall tile prefabs.
 
-    public GameObject player;
-    public GameObject exit;
+    public GameObject playerPrefab;
+    public GameObject exitPrefab;
+    public GameObject enemyPrefab;
 
     private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
     private Room[] rooms;                                     // All the rooms that are created for this board.
@@ -211,6 +212,9 @@ public class BoardCreator : MonoBehaviour
         //Instantiate Player
         Assert.IsTrue(InstantiatePlayer());
 
+        //Instantiate Enemy
+        Assert.IsTrue(InstantiateEnemy());
+
         //Instantiate Exit
         Assert.IsTrue(InstantiateExit());
 
@@ -221,7 +225,15 @@ public class BoardCreator : MonoBehaviour
         int roomIndex = Random.Range(0, rooms.Length);
 
         Vector3 exitPos = rooms[roomIndex].RandomTile();
-        Instantiate(exit, exitPos, Quaternion.identity);
+        Instantiate(exitPrefab, exitPos, Quaternion.identity);
+        return true;
+    }
+
+    bool InstantiateEnemy() {
+        int roomIndex = Random.Range(0, rooms.Length);
+
+        Vector3 enemyPos = rooms[roomIndex].RandomTile();
+        Instantiate(enemyPrefab, enemyPos, Quaternion.identity);
         return true;
     }
 
@@ -230,7 +242,7 @@ public class BoardCreator : MonoBehaviour
         int roomIndex = Random.Range(0, rooms.Length);
 
         Vector3 playerPos = rooms[roomIndex].RandomTile();
-        Instantiate(player, playerPos, Quaternion.identity);
+        Instantiate(playerPrefab, playerPos, Quaternion.identity);
         return true;
     }
 

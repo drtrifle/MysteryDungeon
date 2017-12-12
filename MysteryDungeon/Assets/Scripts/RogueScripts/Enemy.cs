@@ -48,7 +48,7 @@ using System.Collections;
 			base.AttemptMove <T> (xDir, yDir);
 			
 			//Now that Enemy has moved, set skipMove to true to skip next move.
-			skipMove = true;
+			//skipMove = true;
 		}
 		
 		
@@ -87,10 +87,10 @@ using System.Collections;
 			hitPlayer.LoseFood (playerDamage);
 			
 			//Set the attack trigger of animator to trigger Enemy attack animation.
-			animator.SetTrigger ("enemyAttack");
+			//animator.SetTrigger ("enemyAttack");
 			
 			//Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
-			SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
+			//SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
 		}
 	}
 
