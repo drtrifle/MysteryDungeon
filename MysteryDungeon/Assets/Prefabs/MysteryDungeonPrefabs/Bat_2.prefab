@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114411650718238146}
   - component: {fileID: 61693698890207290}
   - component: {fileID: 50286998115472954}
+  - component: {fileID: 95836496969584348}
   m_Layer: 0
   m_Name: Bat_2
   m_TagString: Untagged
@@ -88,6 +89,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &95836496969584348
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797803908783000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c99d2316a2302a94fab2e5ba42ea04b0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114411650718238146
 MonoBehaviour:
   m_ObjectHideFlags: 1
