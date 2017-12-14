@@ -46,10 +46,18 @@ public class Enemy : MovingObject
 			
 			//Call the AttemptMove function from MovingObject.
 			base.AttemptMove <T> (xDir, yDir);
-			
-			//Now that Enemy has moved, set skipMove to true to skip next move.
-			//skipMove = true;
-		}
+
+            //Update Animaions
+            animator.SetFloat("moveX", xDir);
+            animator.SetFloat("moveY", yDir);
+            //Update the LastInput of Player Even if move unsuccessful
+            animator.SetFloat("lastMoveX", xDir);
+            animator.SetFloat("lastMoveY", yDir);
+
+
+        //Now that Enemy has moved, set skipMove to true to skip next move.
+        //skipMove = true;
+    }
 
 
     //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
