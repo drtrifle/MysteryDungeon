@@ -3,14 +3,13 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Tilemaps;
 
+// The type of tile that will be laid in a specific position.
+public enum TileType {
+    Wall, Floor,
+}
+
 public class BoardCreator : MonoBehaviour
 {
-    // The type of tile that will be laid in a specific position.
-    public enum TileType
-    {
-        Wall, Floor,
-    }
-
 
     public int columns = 100;                                 // The number of columns on the board (how wide it will be).
     public int rows = 100;                                    // The number of rows on the board (how tall it will be).
@@ -314,5 +313,9 @@ public class BoardCreator : MonoBehaviour
 
         // Set the tile's parent to the board holder.
         tileInstance.transform.parent = boardHolder.transform;
+    }
+
+    public TileType[][] GetTileArray() {
+        return tiles;
     }
 }

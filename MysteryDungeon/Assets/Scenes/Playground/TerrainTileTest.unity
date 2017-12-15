@@ -503,6 +503,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1287803418862740, guid: 6eaa0b8dd62132740b51ba9d7721ec7d, type: 2}
+      propertyPath: m_TagString
+      value: BoardCreator
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eaa0b8dd62132740b51ba9d7721ec7d, type: 2}
   m_IsPrefabParent: 0
