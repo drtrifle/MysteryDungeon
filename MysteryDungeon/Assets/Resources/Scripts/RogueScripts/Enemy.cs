@@ -7,7 +7,6 @@ public class Enemy : MovingObject {
     public AudioClip attackSound1;                      //First of two audio clips to play when attacking the player.
     public AudioClip attackSound2;                      //Second of two audio clips to play when attacking the player.
 
-
     private Animator animator;                          //Variable of type Animator to store a reference to the enemy's Animator component.
     private Transform target;                           //Transform to attempt to move toward each turn.
     private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
@@ -40,7 +39,6 @@ public class Enemy : MovingObject {
         if (skipMove) {
             skipMove = false;
             return;
-
         }
 
         //Call the AttemptMove function from MovingObject.
@@ -95,6 +93,14 @@ public class Enemy : MovingObject {
 
         //Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
         //SoundManager.instance.RandomizeSfx (attackSound1, attackSound2);
+    }
+
+    //public method for other classes to damage enemy
+    public void TakeDamage(int dmgAmount) {
+        //TODO: ADD ENEMY HP
+
+        Destroy(gameObject);
+
     }
 }
 

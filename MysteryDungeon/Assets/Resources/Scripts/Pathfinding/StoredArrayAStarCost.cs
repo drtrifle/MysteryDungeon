@@ -26,6 +26,14 @@ public class StoredArrayAStarCost : AStarCost {
     }
 
     private bool isPassable(int toX, int toY, int fromX, int fromY) {
+
+        //Check bounds
+        if(toX < 0 || fromX < 0 || toX >= _boardCreator.rows || fromX >= _boardCreator.rows) {
+            return false;
+        }else if (toY < 0 || fromY < 0 || toY >= _boardCreator.columns || fromY >= _boardCreator.columns) {
+            return false;
+        }
+
         if(tileArray[fromX][fromY] != TileType.Wall && tileArray[toX][toY] != TileType.Wall) {
             return true;
         }

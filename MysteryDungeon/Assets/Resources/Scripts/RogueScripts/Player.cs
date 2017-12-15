@@ -21,6 +21,9 @@ public class Player : MovingObject {
     private Animator animator;                  //Used to store a reference to the Player's animator component.
     private int food;                           //Used to store player food points total during level.
 
+    public GameObject[] spellArray;             //Array of spells that player has
+    private int currSpellIndex = 0;                 //Index of currently selected spell
+
     private void Awake() {
         //Set the main camera to be the child of the player object
         Camera mainCamera = Camera.main;
@@ -57,6 +60,26 @@ public class Player : MovingObject {
 
 
     private void Update() {
+        HandleAttackInput();
+        HandleMovementInput();
+    }
+
+    private void HandleAttackInput() {
+        if (Input.GetKeyDown("space")) {
+            if(currSpellIndex < spellArray.Length) {
+                float angle = Mathf.Atan2(animator.GetFloat("lastMoveY"), animator.GetFloat("lastMoveX")) * Mathf.Rad2Deg;
+                angle -= 180f;
+                GameObject firedProjectile = Instantiate(spellArray[currSpellIndex], transform.position, Quaternion.AngleAxis(angle, Vector3.forward));
+                Physics2D.IgnoreCollision(firedProjectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
+                //Set the playersTurn boolean of GameManager to false now that players turn is over.
+                GameManager.instance.playersTurn = false;
+            }
+        }
+    }
+
+    #region Player Movement Methods
+    private void HandleMovementInput() {
         //If it's not the player's turn, exit the function.
         if (!GameManager.instance.playersTurn) return;
 
@@ -135,7 +158,7 @@ public class Player : MovingObject {
         //Set the attack trigger of the player's animation controller in order to play the player's attack animation.
         animator.SetTrigger("playerChop");
     }
-
+    #endregion
 
     //OnTriggerEnter2D is sent when another object enters a trigger collider attached to this object (2D physics only).
     private void OnTriggerEnter2D(Collider2D other) {
