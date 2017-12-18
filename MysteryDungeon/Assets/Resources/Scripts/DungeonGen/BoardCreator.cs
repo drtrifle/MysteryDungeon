@@ -318,4 +318,11 @@ public class BoardCreator : MonoBehaviour
     public TileType[][] GetTileArray() {
         return tiles;
     }
+
+    public Vector2 GetRandomTileLocation() {
+        int roomIndex = Random.Range(0, rooms.Length);
+
+        Vector2 randomPos = rooms[roomIndex].RandomTile();
+        return randomPos;
+    }
 }

@@ -8,10 +8,17 @@ public class Enemy : MovingObject {
     public AudioClip attackSound2;                      //Second of two audio clips to play when attacking the player.
 
     private Animator animator;                          //Variable of type Animator to store a reference to the enemy's Animator component.
-    private Transform target;                           //Transform to attempt to move toward each turn.
+    private Transform playerTransform;                  //Transform to attempt to move toward each turn.
     private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
 
     private BoardCreator _boardCreator;                 //Reference to BoardCreator class for AStarPathfinding
+
+    private AStar astar;                                //Stores pathfinding solution
+    private int astarCounter = 1;                       //Counts the current iteration for pathfinding 
+    private bool isPathEstablished = false;             //Flag to check if we should rebuild the AStar path
+
+    private int currentX;                               //Current X world coordinate of enemy
+    private int currentY;                               //Current Y world coordinate of enemy
 
     //Start overrides the virtual Start function of the base class.
     protected override void Start() {
@@ -23,7 +30,7 @@ public class Enemy : MovingObject {
         animator = GetComponent<Animator>();
 
         //Find the Player GameObject using it's tag and store a reference to its transform component.
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         _boardCreator = GameObject.FindGameObjectWithTag("BoardCreator").GetComponent<BoardCreator>();
 
@@ -59,18 +66,64 @@ public class Enemy : MovingObject {
 
     //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
     public void MoveEnemy() {
-        int currentX = Mathf.RoundToInt(transform.position.x);
-        int currentY = Mathf.RoundToInt(transform.position.y);
+        //Calculate current position;
+        currentX = Mathf.RoundToInt(transform.position.x);
+        currentY = Mathf.RoundToInt(transform.position.y);
 
+        //TODO: Check if enemy can see player
+        if (isPathEstablished) {
+            AStarNode2D nextStep = (AStarNode2D)astar.solution[astarCounter];
+            int xDir = nextStep.x - currentX;
+            int yDir = nextStep.y - currentY;
+
+            astarCounter++;
+
+            //Current iteration is the final one to get to goal
+            if (astarCounter >= astar.solution.Count) {
+                isPathEstablished = false;
+            }
+
+            AttemptMove<Player>(xDir, yDir);
+        } else {
+            MoveEnemyToRandom();
+        }
+    }
+
+    //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
+    private void MoveEnemyToRandom() {
+        Vector2 targetVector = _boardCreator.GetRandomTileLocation();
+
+        //Prevent rolling the exact same position
+        while (targetVector.x == currentX && targetVector.y == currentY) {
+            targetVector = _boardCreator.GetRandomTileLocation();
+        }
+
+        astar = new AStar(new StoredArrayAStarCost(_boardCreator), currentX, currentY, Mathf.RoundToInt(targetVector.x), Mathf.RoundToInt(targetVector.y));
+        astar.findPath();
+
+        //Set flags to tell MoveEnemy() that we successfully computed location 
+        isPathEstablished = true;
+        astarCounter = 1;
+
+        AStarNode2D nextStep = (AStarNode2D)astar.solution[astarCounter];
+
+        int xDir = nextStep.x - currentX;
+        int yDir = nextStep.y - currentY;
+
+        AttemptMove<Player>(xDir, yDir);
+    }
+
+    //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
+    private void MoveEnemyToPlayer() {
         GetComponent<BoxCollider2D>().enabled = false;
-        target.GetComponent<BoxCollider2D>().enabled = false;
+        playerTransform.GetComponent<BoxCollider2D>().enabled = false;
 
-        AStar astar = new AStar(new StoredArrayAStarCost(_boardCreator), currentX, currentY, Mathf.RoundToInt(target.position.x), Mathf.RoundToInt(target.position.y));
+        astar = new AStar(new StoredArrayAStarCost(_boardCreator), currentX, currentY, Mathf.RoundToInt(playerTransform.position.x), Mathf.RoundToInt(playerTransform.position.y));
         astar.findPath();
         AStarNode2D nextStep = (AStarNode2D)astar.solution[1];
 
         //GetComponent<BoxCollider2D>().enabled = true;
-        target.GetComponent<BoxCollider2D>().enabled = true;
+        playerTransform.GetComponent<BoxCollider2D>().enabled = true;
 
         int xDir = nextStep.x - currentX;
         int yDir = nextStep.y - currentY;
