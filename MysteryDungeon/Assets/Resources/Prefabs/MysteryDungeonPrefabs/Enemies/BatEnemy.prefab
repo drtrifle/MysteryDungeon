@@ -124,6 +124,9 @@ MonoBehaviour:
   playerDamage: 1
   attackSound1: {fileID: 0}
   attackSound2: {fileID: 0}
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!212 &212536764521579286
 SpriteRenderer:
   m_ObjectHideFlags: 1

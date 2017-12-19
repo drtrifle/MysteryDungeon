@@ -6,7 +6,7 @@ public class Enemy : MovingObject {
     public int playerDamage;                            //The amount of food points to subtract from the player when attacking.
     public AudioClip attackSound1;                      //First of two audio clips to play when attacking the player.
     public AudioClip attackSound2;                      //Second of two audio clips to play when attacking the player.
-
+    
     private Animator animator;                          //Variable of type Animator to store a reference to the enemy's Animator component.
     private Transform playerTransform;                  //Transform to attempt to move toward each turn.
     private bool skipMove;                              //Boolean to determine whether or not enemy should skip a turn or move this turn.
@@ -16,6 +16,7 @@ public class Enemy : MovingObject {
     private AStar astar;                                //Stores pathfinding solution
     private int astarCounter = 1;                       //Counts the current iteration for pathfinding 
     private bool isPathEstablished = false;             //Flag to check if we should rebuild the AStar path
+    public LayerMask playerLayerMask;                  //Check Player Layer
 
     private int currentX;                               //Current X world coordinate of enemy
     private int currentY;                               //Current Y world coordinate of enemy
@@ -70,8 +71,15 @@ public class Enemy : MovingObject {
         currentX = Mathf.RoundToInt(transform.position.x);
         currentY = Mathf.RoundToInt(transform.position.y);
 
-        //TODO: Check if enemy can see player
-        if (isPathEstablished) {
+        bool isPlayerSeen = CheckIfCanSeePlayer();
+        Debug.Log(isPlayerSeen);
+
+        if (isPlayerSeen) {
+            MoveEnemyToPlayer();
+            isPathEstablished = false;
+        }
+
+        if (isPathEstablished && !isPlayerSeen) {
             AStarNode2D nextStep = (AStarNode2D)astar.solution[astarCounter];
             int xDir = nextStep.x - currentX;
             int yDir = nextStep.y - currentY;
@@ -84,9 +92,20 @@ public class Enemy : MovingObject {
             }
 
             AttemptMove<Player>(xDir, yDir);
-        } else {
+        } else if(!isPlayerSeen) {
             MoveEnemyToRandom();
+            isPathEstablished = true;
         }
+    }
+
+    private bool CheckIfCanSeePlayer() {
+        RaycastHit2D hit = Physics2D.Linecast(transform.position, playerTransform.position, playerLayerMask);
+
+        if(hit.transform == null) {
+            return false;
+        }
+
+        return hit.transform.CompareTag("Player");   
     }
 
     //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
@@ -102,7 +121,6 @@ public class Enemy : MovingObject {
         astar.findPath();
 
         //Set flags to tell MoveEnemy() that we successfully computed location 
-        isPathEstablished = true;
         astarCounter = 1;
 
         AStarNode2D nextStep = (AStarNode2D)astar.solution[astarCounter];
@@ -115,15 +133,15 @@ public class Enemy : MovingObject {
 
     //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
     private void MoveEnemyToPlayer() {
-        GetComponent<BoxCollider2D>().enabled = false;
-        playerTransform.GetComponent<BoxCollider2D>().enabled = false;
+        //GetComponent<BoxCollider2D>().enabled = false;
+        //playerTransform.GetComponent<BoxCollider2D>().enabled = false;
 
         astar = new AStar(new StoredArrayAStarCost(_boardCreator), currentX, currentY, Mathf.RoundToInt(playerTransform.position.x), Mathf.RoundToInt(playerTransform.position.y));
         astar.findPath();
         AStarNode2D nextStep = (AStarNode2D)astar.solution[1];
 
         //GetComponent<BoxCollider2D>().enabled = true;
-        playerTransform.GetComponent<BoxCollider2D>().enabled = true;
+        //playerTransform.GetComponent<BoxCollider2D>().enabled = true;
 
         int xDir = nextStep.x - currentX;
         int yDir = nextStep.y - currentY;
